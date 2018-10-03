@@ -32,9 +32,6 @@ App = {
     },
 
     bindEvents: function () {
-<<<<<<< HEAD
-        $(document).on('click', '#testButton', App.testFunction);
-=======
         $(document).on('click', '#mintButton1', App.mint);
         $(document).on('click', '#mintButton2', App.mint);
         $(document).on('click', '#mintButton3', App.mint);
@@ -44,7 +41,6 @@ App = {
         $(document).on('click', '#mintButton7', App.mint);
         $(document).on('click', '#mintButton8', App.mint);
         $(document).on('click', '#mintButton9', App.mint);
->>>>>>> 29d9cc0817e8faa404fd568e9b6e12984d82948b
     },
 
     testFunction: function (event) {
@@ -66,8 +62,6 @@ App = {
         });
     },
 
-<<<<<<< HEAD
-=======
     mint: function (event) {
         event.preventDefault();
         let TibiaTokenInstance;
@@ -93,7 +87,6 @@ App = {
         });
     },
 
->>>>>>> 29d9cc0817e8faa404fd568e9b6e12984d82948b
 };
 
 $(function () {
