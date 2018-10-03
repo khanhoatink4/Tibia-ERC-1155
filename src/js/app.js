@@ -32,7 +32,19 @@ App = {
     },
 
     bindEvents: function () {
+<<<<<<< HEAD
         $(document).on('click', '#testButton', App.testFunction);
+=======
+        $(document).on('click', '#mintButton1', App.mint);
+        $(document).on('click', '#mintButton2', App.mint);
+        $(document).on('click', '#mintButton3', App.mint);
+        $(document).on('click', '#mintButton4', App.mint);
+        $(document).on('click', '#mintButton5', App.mint);
+        $(document).on('click', '#mintButton6', App.mint);
+        $(document).on('click', '#mintButton7', App.mint);
+        $(document).on('click', '#mintButton8', App.mint);
+        $(document).on('click', '#mintButton9', App.mint);
+>>>>>>> 29d9cc0817e8faa404fd568e9b6e12984d82948b
     },
 
     testFunction: function (event) {
@@ -54,6 +66,34 @@ App = {
         });
     },
 
+<<<<<<< HEAD
+=======
+    mint: function (event) {
+        event.preventDefault();
+        let TibiaTokenInstance;
+
+        let name = "Maiko";
+        let totalSupply = 1000000; 
+        let uri = "http://test.com/test.json"; 
+        let decimals = 0; 
+        let symbol = "SWD";
+
+        web3.eth.getAccounts(function (error, accounts) {
+            if (error) {
+                console.log(error);
+            }
+            App.contracts.TibiaToken.deployed().then(function (instance) {
+                TibiaTokenInstance = instance;
+                return TibiaTokenInstance.mint(name, totalSupply, uri, decimals, symbol);
+            }).then(function (result) {
+                alert('Test: ' + result);
+            }).catch(function (err) {
+                console.log(err.message);
+            });
+        });
+    },
+
+>>>>>>> 29d9cc0817e8faa404fd568e9b6e12984d82948b
 };
 
 $(function () {
