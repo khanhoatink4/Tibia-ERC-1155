@@ -34,8 +34,8 @@ App = {
     bindEvents: function () {
         $(document).on('click', '#testTransferButton', App.testTransfer);
 
-        $(document).on('click', '#mintButton1', App.mint);
-        $(document).on('click', '#balanceAccount1Button', App.getBalanceAccount1);
+        // $(document).on('click', '#mintButton1', App.mint);
+        // $(document).on('click', '#mintButton2', App.mint);
         // $(document).on('click', '#mintButton3', App.mint);
         // $(document).on('click', '#mintButton4', App.mint);
         // $(document).on('click', '#mintButton5', App.mint);
@@ -43,6 +43,16 @@ App = {
         // $(document).on('click', '#mintButton7', App.mint);
         // $(document).on('click', '#mintButton8', App.mint);
         // $(document).on('click', '#mintButton9', App.mint);
+
+        // $(document).on('click', '#balanceButton1', App.balance);
+        // $(document).on('click', '#balanceButton2', App.balance);
+        // $(document).on('click', '#balanceButton3', App.balance);
+        // $(document).on('click', '#balanceButton4', App.balance);
+        // $(document).on('click', '#balanceButton5', App.balance);
+        // $(document).on('click', '#balanceButton6', App.balance);
+        // $(document).on('click', '#balanceButton7', App.balance);
+        // $(document).on('click', '#balanceButton8', App.balance);
+        // $(document).on('click', '#balanceButton9', App.balance);
     },
 
     testTransfer: function (event) {
