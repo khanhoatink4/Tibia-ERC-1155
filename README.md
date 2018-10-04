@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.com/maikotrindade/Tibia-ERC-1155.svg?branch=master)](https://travis-ci.com/maikotrindade/Tibia-ERC-1155)
 # ERC-1155 Implementation using Tibia game items 
 
 This project is a sample code of interaction of ERC-1155 pattern. 
