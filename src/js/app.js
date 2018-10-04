@@ -21,7 +21,7 @@ App = {
     },
 
     initContract: function () {
-        $.getJSON('ERC1155Mintable.json', function (data) {
+        $.getJSON('TibiaGameItems.json', function (data) {
             var TibiaTokenArtifact = data;
             //console.log(data)
             App.contracts.TibiaToken = TruffleContract(TibiaTokenArtifact);
@@ -32,76 +32,98 @@ App = {
     },
 
     bindEvents: function () {
-        $(document).on('click', '#testTransferButton', App.testTransfer);
+        //$(document).on('click', '#testTransferButton', App.testTransfer);
 
-        // $(document).on('click', '#mintButton1', App.mint);
-        // $(document).on('click', '#mintButton2', App.mint);
-        // $(document).on('click', '#mintButton3', App.mint);
-        // $(document).on('click', '#mintButton4', App.mint);
-        // $(document).on('click', '#mintButton5', App.mint);
-        // $(document).on('click', '#mintButton6', App.mint);
-        // $(document).on('click', '#mintButton7', App.mint);
-        // $(document).on('click', '#mintButton8', App.mint);
-        // $(document).on('click', '#mintButton9', App.mint);
+        $("#mintButton1").click({
+            param1: "tibia-crystalline-sword",
+            param2: 1,
+            param3: "TCS"
+        }, App.mint);
+        $("#mintButton2").click({
+            param1: "tibia-giant-sword",
+            param2: 2,
+            param3: "TGS"
+        }, App.mint);
+        $("#mintButton3").click({
+            param1: "tibia-haunted-blade",
+            param2: 3,
+            param3: "THS"
+        }, App.mint);
+        $("#mintButton4").click({
+            param1: "tibia-magic-sword",
+            param2: 4,
+            param3: "TMS"
+        }, App.mint);
+        $("#mintButton5").click({
+            param1: "tibia-mercenary-sword",
+            param2: 5,
+            param3: "TYS"
+        }, App.mint);
+        $("#mintButton6").click({
+            param1: "tibia-pharaoh-sword",
+            param2: 6,
+            param3: "TPS"
+        }, App.mint);
+        $("#mintButton7").click({
+            param1: "tibia-the-avenger",
+            param2: 7,
+            param3: "TAS"
+        }, App.mint);
+        $("#mintButton8").click({
+            param1: "tibia-shiny-blade",
+            param2: 8,
+            param3: "TSS"
+        }, App.mint);
+        $("#mintButton9").click({
+            param1: "tibia-zaoan-sword",
+            param2: 9,
+            param3: "TZS"
+        }, App.mint);
 
-        // $(document).on('click', '#balanceButton1', App.balance);
-        // $(document).on('click', '#balanceButton2', App.balance);
-        // $(document).on('click', '#balanceButton3', App.balance);
-        // $(document).on('click', '#balanceButton4', App.balance);
-        // $(document).on('click', '#balanceButton5', App.balance);
-        // $(document).on('click', '#balanceButton6', App.balance);
-        // $(document).on('click', '#balanceButton7', App.balance);
-        // $(document).on('click', '#balanceButton8', App.balance);
-        // $(document).on('click', '#balanceButton9', App.balance);
-    },
 
-    testTransfer: function (event) {
-        event.preventDefault();
-        let TibiaTokenInstance;
+        $("#balanceButton1").click({
+            param1: 1,
+        }, App.getBalance);
+        $("#balanceButton2").click({
+            param1: 2,
+        }, App.getBalance);
+        $("#balanceButton3").click({
+            param1: 4,
+        }, App.getBalance);
+        $("#balanceButton4").click({
+            param1: 4,
+        }, App.getBalance);
+        $("#balanceButton5").click({
+            param1: 5,
+        }, App.getBalance);
+        $("#balanceButton6").click({
+            param1: 6,
+        }, App.getBalance);
+        $("#balanceButton7").click({
+            param1: 7,
+        }, App.getBalance);
+        $("#balanceButton8").click({
+            param1: 8,
+        }, App.getBalance);
+        $("#balanceButton9").click({
+            param1: 9,
+        }, App.getBalance);
 
-        web3.eth.getAccounts(function (error, accounts) {
-            if (error) {
-                console.log(error);
-            }
-            App.contracts.TibiaToken.deployed().then(function (instance) {
-                TibiaTokenInstance = instance;
-                return TibiaTokenInstance.transfer(accounts[0], accounts[1], 1, 500000);
-            }).then(function (result) {
-                alert('testTransfer: ' + JSON.stringify(result));
-            }).catch(function (err) {
-                console.log(err.message);
-            });
-        });
-    },
-
-    getBalanceAccount1: function (event) {
-        event.preventDefault();
-        let TibiaTokenInstance;
-
-        web3.eth.getAccounts(function (error, accounts) {
-            if (error) {
-                console.log(error);
-            }
-            App.contracts.TibiaToken.deployed().then(function (instance) {
-                TibiaTokenInstance = instance;
-                return TibiaTokenInstance.balanceOf.call(1, accounts[0]);
-            }).then(function (result) {
-                alert('Balance account 1: ' + result);
-            }).catch(function (err) {
-                console.log(err.message);
-            });
-        });
     },
 
     mint: function (event) {
         event.preventDefault();
         let TibiaTokenInstance;
 
-        let name = "Maiko";
-        let totalSupply = 100;
-        let uri = "http://test.com/test.json";
+        let name = event.data.param1
+        let id = event.data.param2
+        let idSelector = "#totalSupply" + id
+        let totalSupply = $(idSelector).val()
+        $(idSelector).prop('disabled', true);
+        let uri = ""
         let decimals = 0;
-        let symbol = "SWD";
+        let symbol = event.data.param3
+        //alert("name: " + name + " | totalSupply: " + totalSupply + " | uri: " + uri + " | decimals: " + decimals + " | symbol: " + symbol)
 
         web3.eth.getAccounts(function (error, accounts) {
             if (error) {
@@ -109,14 +131,52 @@ App = {
             }
             App.contracts.TibiaToken.deployed().then(function (instance) {
                 TibiaTokenInstance = instance;
-                return TibiaTokenInstance.mint(name, totalSupply, uri, decimals, symbol);
+                return TibiaTokenInstance.mint(name, totalSupply, uri, decimals, symbol, id);
             }).then(function (result) {
-                alert(JSON.stringify(result));
+                //alert(JSON.stringify(result));
             }).catch(function (err) {
                 console.log(err.message);
             });
         });
     },
+
+    getBalance: function (event) {
+        let id = event.data.param1;
+        let TibiaTokenInstance;
+
+        web3.eth.getAccounts(function (error, accounts) {
+            if (error) {
+                console.log(error);
+            }
+            App.contracts.TibiaToken.deployed().then(function (instance) {
+                TibiaTokenInstance = instance;
+                return TibiaTokenInstance.balanceOf.call(id, accounts[0]);
+            }).then(function (result) {
+                alert("Balance (id=" + id + ") is : " + result);
+            }).catch(function (err) {
+                console.log(err.message);
+            });
+        });
+    },
+
+    // testTransfer: function (event) {
+    //     event.preventDefault();
+    //     let TibiaTokenInstance;
+
+    //     web3.eth.getAccounts(function (error, accounts) {
+    //         if (error) {
+    //             console.log(error);
+    //         }
+    //         App.contracts.TibiaToken.deployed().then(function (instance) {
+    //             TibiaTokenInstance = instance;
+    //             return TibiaTokenInstance.transfer(accounts[0], accounts[1], 1, 500000);
+    //         }).then(function (result) {
+    //             alert('testTransfer: ' + JSON.stringify(result));
+    //         }).catch(function (err) {
+    //             console.log(err.message);
+    //         });
+    //     });
+    // },
 
 };
 

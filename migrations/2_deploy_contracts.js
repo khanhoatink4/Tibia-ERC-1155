@@ -1,5 +1,5 @@
-const ERC1155Mintable = artifacts.require("ERC1155Mintable.sol");
+const TibiaGameItems = artifacts.require("TibiaGameItems.sol");
 
 module.exports = function (deployer) {
-    deployer.deploy(ERC1155Mintable);
+    deployer.deploy(TibiaGameItems);
 };

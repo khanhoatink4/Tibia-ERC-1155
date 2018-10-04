@@ -36,16 +36,12 @@ contract('TibiaGameItems', (accounts) => {
     // enjin tests
     //
     it('Mint initial items', async () => {
-        let tx = await mainContract.mint('Hammer', 5, 'https://metadata.enjincoin.io/hammer.json', 0, 'HAM', {from: user1});
-        let hammerId = await mainContract.nonce.call();
-        tx = await mainContract.mint('Sword', 200, 'https://metadata.enjincoin.io/sword.json', 0, 'SRD', {from: user1});
-        let swordId = await mainContract.nonce.call();
-        tx = await mainContract.mint('Mace', 1000000, 'https://metadata.enjincoin.io/mace.json', 0, 'MACE', {from: user1});
-        let maceId = await mainContract.nonce.call();
+        let tx = await mainContract.mint('Hammer', 5, 'https://metadata.enjincoin.io/hammer.json', 0, 'HAM', 1, {from: user1});
+        let hammerName = await mainContract.name(1);
+        tx = await mainContract.mint('Sword', 200, 'https://metadata.enjincoin.io/sword.json', 0, 'SRD', 2, {from: user1});
+        tx = await mainContract.mint('Mace', 1000000, 'https://metadata.enjincoin.io/mace.json', 0, 'MACE', 3, {from: user1});
 
-        assert.strictEqual(hammerId.toNumber(), 1);
-        assert.strictEqual(swordId.toNumber(), 2);
-        assert.strictEqual(maceId.toNumber(), 3);
+        assert.strictEqual('Hammer', hammerName);
     });
 
     it('transfer', async () => {

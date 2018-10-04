@@ -4,16 +4,16 @@ import "./ERC1155.sol";
 
 contract TibiaGameItems is ERC1155 {
     mapping (uint256 => address) public minters;
-    uint256 public nonce;
 
     modifier minterOnly(uint256 _id) {
         require(minters[_id] == msg.sender);
         _;
     }
 
-    function mint(string _name, uint256 _totalSupply, string _uri, uint8 _decimals, string _symbol)
+    function mint(string _name, uint256 _totalSupply, string _uri, uint8 _decimals, string _symbol, uint256 _itemId)
     external returns(uint256 _id) {
-        _id = ++nonce;
+        //TODO add require to avoid duplicate items
+        _id = _itemId;
         minters[_id] = msg.sender; 
 
         items[_id].name = _name;
@@ -28,9 +28,5 @@ contract TibiaGameItems is ERC1155 {
 
     function setURI(uint256 _id, string _uri) external minterOnly(_id) {
         metadataURIs[_id] = _uri;
-    }
-
-    function helloThere() external pure returns (string) {
-        return "Test Function – OK";
     }
 }
