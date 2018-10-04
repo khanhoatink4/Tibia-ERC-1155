@@ -73,24 +73,24 @@ contract('TibiaGameItems', (accounts) => {
         // console.log("swordBalanceUser2 : " + swordBalanceUser2);
         // console.log("maceBalanceUser2 : " + maceBalanceUser2);
         
-        let tx = await mainContract.approve(user1, 1, 4, 1, {from: user1});
-        // let hammerApproval = (await mainContract.allowance.call(1, user1, user2)).toNumber();
-        // let swordApproval = (await mainContract.allowance.call(2, user1, user2)).toNumber();
-        // let maceApproval = (await mainContract.allowance.call(3, user1, user2)).toNumber();
-        // assert.strictEqual(hammerApproval, 1);
-        // assert.strictEqual(swordApproval, 0);
-        // assert.strictEqual(maceApproval, 0);
+        let tx = await mainContract.approve(user2, 1, 0, 1, {from: user1});
+        let hammerApproval = (await mainContract.allowance.call(1, user1, user2)).toNumber();
+        let swordApproval = (await mainContract.allowance.call(2, user1, user2)).toNumber();
+        let maceApproval = (await mainContract.allowance.call(3, user1, user2)).toNumber();
+        assert.strictEqual(hammerApproval, 1);
+        assert.strictEqual(swordApproval, 0);
+        assert.strictEqual(maceApproval, 0);
     });
 
-    // it('transferFrom', async () => {
-    //     let tx = await mainContract.transferFrom(user2, 1, 1, {from: user1});
-    //     let hammerBalance = (await mainContract.balanceOf.call(1, user2)).toNumber();
-    //     let swordBalance = (await mainContract.balanceOf.call(2, user2)).toNumber();
-    //     let maceBalance = (await mainContract.balanceOf.call(3, user2)).toNumber();
-    //     assert.strictEqual(hammerBalance, 1);
-    //     assert.strictEqual(swordBalance, 0);
-    //     assert.strictEqual(maceBalance, 0);
-    // });
+    it('transferFrom', async () => {
+        let tx = await mainContract.transferFrom(user1, user2, 1, 1, {from: user1});
+        let hammerBalance = (await mainContract.balanceOf.call(1, user2)).toNumber();
+        let swordBalance = (await mainContract.balanceOf.call(2, user2)).toNumber();
+        let maceBalance = (await mainContract.balanceOf.call(3, user2)).toNumber();
+        assert.strictEqual(hammerBalance, 2);
+        assert.strictEqual(swordBalance, 0);
+        assert.strictEqual(maceBalance, 0);
+    });
 
     function printBalances(accounts) {
         console.log('    ', '== Truffle Account Balances ==');

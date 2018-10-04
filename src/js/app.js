@@ -88,7 +88,7 @@ App = {
         let TibiaTokenInstance;
 
         let name = "Maiko";
-        let totalSupply = 1000000;
+        let totalSupply = 100;
         let uri = "http://test.com/test.json";
         let decimals = 0;
         let symbol = "SWD";
