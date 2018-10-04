@@ -37,8 +37,8 @@ App = {
     },
 
     bindEvents: function () {
-        //$(document).on('click', '#testTransferButton', App.testTransfer);
 
+        //Mint
         $("#mintButton1").click({
             param1: "tibia-crystalline-sword",
             param2: 1,
@@ -85,7 +85,7 @@ App = {
             param3: "TZS"
         }, App.mint);
 
-
+        //Balance
         $("#balanceButton1").click({
             param1: 1,
         }, App.getBalance);
@@ -114,6 +114,16 @@ App = {
             param1: 9,
         }, App.getBalance);
 
+        //Transfer
+        $("#transferButton1").click({
+            param1: 1
+        }, App.transfer);
+
+
+        $("#acBalance2").click({
+            param1: 2,
+        }, App.getBalanceAccount);
+
     },
 
     mint: function (event) {
@@ -128,7 +138,6 @@ App = {
         let uri = ""
         let decimals = 0;
         let symbol = event.data.param3
-        //alert("name: " + name + " | totalSupply: " + totalSupply + " | uri: " + uri + " | decimals: " + decimals + " | symbol: " + symbol)
 
         web3.eth.getAccounts(function (error, accounts) {
             if (error) {
@@ -137,8 +146,6 @@ App = {
             App.contracts.TibiaToken.deployed().then(function (instance) {
                 TibiaTokenInstance = instance;
                 return TibiaTokenInstance.mint(name, totalSupply, uri, decimals, symbol, id);
-            }).then(function (result) {
-                //alert(JSON.stringify(result));
             }).catch(function (err) {
                 console.log(err.message);
             });
@@ -146,6 +153,7 @@ App = {
     },
 
     getBalance: function (event) {
+        event.preventDefault();
         let id = event.data.param1;
         let TibiaTokenInstance;
 
@@ -164,24 +172,50 @@ App = {
         });
     },
 
-    // testTransfer: function (event) {
-    //     event.preventDefault();
-    //     let TibiaTokenInstance;
+    transfer: function (event) {
+        event.preventDefault();
+        let id = event.data.param1;
+        let accountNumber = $("#acTransfer1").val()
+        let amount = $("#acAmount1").val()
+        let idSelector = "#acAddress" + accountNumber
+        let addressTo = $(idSelector).val()
 
-    //     web3.eth.getAccounts(function (error, accounts) {
-    //         if (error) {
-    //             console.log(error);
-    //         }
-    //         App.contracts.TibiaToken.deployed().then(function (instance) {
-    //             TibiaTokenInstance = instance;
-    //             return TibiaTokenInstance.transfer(accounts[0], accounts[1], 1, 500000);
-    //         }).then(function (result) {
-    //             alert('testTransfer: ' + JSON.stringify(result));
-    //         }).catch(function (err) {
-    //             console.log(err.message);
-    //         });
-    //     });
-    // },
+        let TibiaTokenInstance
+        App.contracts.TibiaToken.deployed().then(function (instance) {
+            TibiaTokenInstance = instance;
+            return TibiaTokenInstance.transfer(addressTo, id, amount);
+        }).then(function (result) {
+            alert('testTransfer: ' + JSON.stringify(result));
+        }).catch(function (err) {
+            console.log(err.message);
+        });
+    },
+
+    getBalanceAccount: function (event) {
+        event.preventDefault();
+        let accountNumber = event.data.param1;
+        let accSelector = "#acAddress" + accountNumber
+        let address = $(accSelector).val()
+
+        let idSelector = "#idBalance" + accountNumber
+        let id = $(idSelector).val()
+
+        let TibiaTokenInstance;
+
+        web3.eth.getAccounts(function (error, accounts) {
+            if (error) {
+                console.log(error);
+            }
+            App.contracts.TibiaToken.deployed().then(function (instance) {
+                TibiaTokenInstance = instance;
+                return TibiaTokenInstance.balanceOf.call(id, address);
+            }).then(function (result) {
+                alert("Balance (id=" + id + ") is : " + result);
+            }).catch(function (err) {
+                console.log(err.message);
+            });
+        });
+    }
 
 };
 
