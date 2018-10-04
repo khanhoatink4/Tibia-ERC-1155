@@ -19,3 +19,7 @@ Install [Ganache](https://truffleframework.com/ganache)
 ## Unit Tests
 Run `Ganache` on port `HTTP://127.0.0.1:8545`  
 Run `truffle test` to run the unit tests.  
+
+## UI Test
+Run `truffle migrate` or `truffle migrate --reset` to deploy the contract in the Ganache  
+Run `npm run dev` to start `lite-server` with the website  
